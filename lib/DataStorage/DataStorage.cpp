@@ -30,6 +30,11 @@ void DataStorage::set_counter_value(unsigned long _value) {
         counter_total = _value;
         commit_flag = 1;
 }
+void DataStorage::set_date_time(Rtc_Pcf8563& _rtc) {
+        current_hour = _rtc.getHour();
+        current_day = _rtc.getDay();
+        current_month = _rtc.getMonth();
+}
 unsigned long DataStorage::get_counter_value_total() {
         return counter_total;
 }

@@ -8,6 +8,7 @@ public:
         void increment_counter();
         void reset_counter();
         void set_counter_value(unsigned long _value);
+        void set_date_time(Rtc_Pcf8563& _rtc);
 
         unsigned long get_counter_value_total();
         uint16_t get_counter_value_hour(uint8_t _hour);
