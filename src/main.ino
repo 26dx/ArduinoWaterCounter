@@ -31,7 +31,7 @@ void loop() {
                 counter0.save_counter(rtc);
                 counter1.save_counter(rtc);
                 Serial.println(counter0.get_counter_value_day(0));
-                Serial.println(counter1.get_counter_value_dat(0));
+                Serial.println(counter1.get_counter_value_day(0));
         }
         display(lcd, rtc, counter0, counter1);
         delay(500);
