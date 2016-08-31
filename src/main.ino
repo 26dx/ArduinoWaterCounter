@@ -28,15 +28,15 @@ void setup() {
 }
 void loop() {
         if (input_interrupt_flag) {
+                input_interrupt_flag = 0;
                 counter0.save_counter(rtc);
                 counter1.save_counter(rtc);
-                Serial.println(counter0.get_counter_value_day(0));
-                Serial.println(counter1.get_counter_value_day(0));
+                display(lcd, rtc, counter0, counter1);
         }
-        display(lcd, rtc, counter0, counter1);
         delay(500);
 }
 void display(LiquidCrystal_I2C& _lcd, Rtc_Pcf8563& _rtc, DataStorage& _counter0, DataStorage& _counter1) {
+        _lcd.clear();
         // выводим первую строку
         _lcd.setCursor(0, 0);
         _lcd.print(_counter0.get_counter_description());
