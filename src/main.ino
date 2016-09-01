@@ -14,10 +14,10 @@ void setup() {
         counter0.set_date_time(rtc);
         counter1.set_date_time(rtc);
         // инициализация данных в памяти
-        counter0.reset_counter();
+/*        counter0.reset_counter();
         counter1.reset_counter();
         counter0.save_counter(rtc);
-        counter1.save_counter(rtc);
+        counter1.save_counter(rtc);*/
         // инициализация прерываний
         attachInterrupt(0, input_interrupt_0, RISING);
         attachInterrupt(1, input_interrupt_1, RISING);
@@ -25,6 +25,7 @@ void setup() {
         lcd.init();
         lcd.backlight();
         lcd.home();
+        display(lcd, rtc, counter0, counter1);
 }
 void loop() {
         if (input_interrupt_flag) {
@@ -40,7 +41,7 @@ void display(LiquidCrystal_I2C& _lcd, Rtc_Pcf8563& _rtc, DataStorage& _counter0,
         // выводим первую строку
         _lcd.setCursor(0, 0);
         _lcd.print(_counter0.get_counter_description());
-        _lcd.setCursor(0, 6);
+        _lcd.setCursor(6, 0);
         _lcd.print(_counter1.get_counter_description());
         _lcd.setCursor(11, 0);
         _lcd.print(_rtc.formatTime(RTCC_TIME_HM));
@@ -49,8 +50,8 @@ void display(LiquidCrystal_I2C& _lcd, Rtc_Pcf8563& _rtc, DataStorage& _counter0,
         _lcd.print(_counter0.get_counter_value_day(0));
         _lcd.setCursor(6, 1);
         _lcd.print(_counter1.get_counter_value_day(0));
-        _lcd.setCursor(12, 1);
-        _lcd.print("type");
+        _lcd.setCursor(11, 1);
+        _lcd.print("10L/D");
 }
 void input_interrupt_0() {
         input_interrupt_flag = 1;
