@@ -4,8 +4,8 @@ DataStorage::DataStorage(String _counter_description, uint8_t _EEPROM_address) {
         counter_description = _counter_description;
         counter_EEPROM_address = _EEPROM_address;
         counter_total = 0;
-        for (int i = 0; i < 24; counter_hour[i++]);
-        for (int i = 0; i < 31; counter_day[i++]);
+        for (int i = 0; i < 24; counter_hour[i++]=0);
+        for (int i = 0; i < 31; counter_day[i++]=0);
         // добавить чтение записанных значений из памяти
         current_month = 0;
         current_day = 0;
@@ -21,8 +21,8 @@ void DataStorage::increment_counter() {
 }
 void DataStorage::reset_counter() {
         counter_total = 0;
-        for (int i = 0; i < 24; counter_hour[i++]);
-        for (int i = 0; i < 31; counter_day[i++]);
+        for (int i = 0; i < 24; counter_hour[i++]=0);
+        for (int i = 0; i < 31; counter_day[i++]=0);
         commit_flag = 1;
 }
 void DataStorage::set_counter_value(unsigned long _value) {
