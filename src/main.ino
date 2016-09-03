@@ -3,16 +3,14 @@
 #include "DataStorage.h"
 #include <LiquidCrystal_I2C.h>
 
-DataStorage counter0("Hot",0);
-DataStorage counter1("Cold",117);
 Rtc_Pcf8563 rtc;
 LiquidCrystal_I2C lcd(0x27,16,2);
-
-volatile uint8_t input_interrupt_flag = 0;
+DataStorage counter0("Hot",0,rtc);
+DataStorage counter1("Cold",117,rtc);
 
 void setup() {
-        counter0.set_date_time(rtc);
-        counter1.set_date_time(rtc);
+//        counter0.set_date_time(rtc);
+//        counter1.set_date_time(rtc);
         // инициализация данных в памяти
 /*        counter0.reset_counter();
         counter1.reset_counter();
@@ -28,13 +26,10 @@ void setup() {
         display(lcd, rtc, counter0, counter1);
 }
 void loop() {
-        if (input_interrupt_flag) {
-                input_interrupt_flag = 0;
                 counter0.save_counter(rtc);
                 counter1.save_counter(rtc);
-                display(lcd, rtc, counter0, counter1);
-        }
-        delay(500);
+        display(lcd, rtc, counter0, counter1);
+        delay(1000);
 }
 void display(LiquidCrystal_I2C& _lcd, Rtc_Pcf8563& _rtc, DataStorage& _counter0, DataStorage& _counter1) {
         _lcd.clear();
@@ -54,10 +49,8 @@ void display(LiquidCrystal_I2C& _lcd, Rtc_Pcf8563& _rtc, DataStorage& _counter0,
         _lcd.print("10L/D");
 }
 void input_interrupt_0() {
-        input_interrupt_flag = 1;
         counter0.increment_counter();
 }
 void input_interrupt_1() {
-        input_interrupt_flag = 1;
         counter1.increment_counter();
 }
