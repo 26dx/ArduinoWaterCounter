@@ -1,15 +1,15 @@
 #include "DataStorage.h"
 
-DataStorage::DataStorage(String _counter_description, uint8_t _EEPROM_address, Rtc_Pcf8563& _rtc) {
+DataStorage::DataStorage(String _counter_description, uint8_t _EEPROM_address) {
         counter_description = _counter_description;
         counter_EEPROM_address = _EEPROM_address;
         counter_total = 0;
         for (int i = 0; i < 24; counter_hour[i++]=0);
         for (int i = 0; i < 31; counter_day[i++]=0);
         // добавить чтение записанных значений из памяти
-        current_month = _rtc.getMonth();
-        current_day = _rtc.getDay();
-        current_hour = _rtc.getHour();
+        current_month = 0;
+        current_day = 0;
+        current_hour = 0;
         commit_flag = 0;
         load_counter();
 }
@@ -56,6 +56,7 @@ void DataStorage::save_counter(Rtc_Pcf8563& _rtc) {
         uint8_t _address = counter_EEPROM_address;
         byte _data_byte[4] = {0,0,0,0};
         if (commit_flag) {
+                commit_flag = 0;
                 // проверка изменения часа или дня!
                 if (current_hour != _rtc.getHour()) {
                         current_hour = _rtc.getHour();
@@ -71,7 +72,6 @@ void DataStorage::save_counter(Rtc_Pcf8563& _rtc) {
                 }
                 if (current_month != _rtc.getMonth())
                         current_month = _rtc.getMonth();
-                commit_flag = 0;
                 EEPROM.write(_address++, current_hour);
                 EEPROM.write(_address++, current_day);
                 EEPROM.write(_address++, current_month);

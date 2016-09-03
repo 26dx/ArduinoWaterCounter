@@ -5,12 +5,12 @@
 
 Rtc_Pcf8563 rtc;
 LiquidCrystal_I2C lcd(0x27,16,2);
-DataStorage counter0("Hot",0,rtc);
-DataStorage counter1("Cold",117,rtc);
+DataStorage counter0("Hot",0);
+DataStorage counter1("Cold",117);
 
 void setup() {
-//        counter0.set_date_time(rtc);
-//        counter1.set_date_time(rtc);
+        counter0.set_date_time(rtc);
+        counter1.set_date_time(rtc);
         // инициализация данных в памяти
 /*        counter0.reset_counter();
         counter1.reset_counter();
@@ -26,8 +26,8 @@ void setup() {
         display(lcd, rtc, counter0, counter1);
 }
 void loop() {
-                counter0.save_counter(rtc);
-                counter1.save_counter(rtc);
+        counter0.save_counter(rtc);
+        counter1.save_counter(rtc);
         display(lcd, rtc, counter0, counter1);
         delay(1000);
 }

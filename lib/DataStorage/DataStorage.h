@@ -4,7 +4,7 @@
 
 class DataStorage {
 public:
-        DataStorage(String _counter_description, uint8_t _EEPROM_address, Rtc_Pcf8563& _rtc);
+        DataStorage(String _counter_description, uint8_t _EEPROM_address);
         void increment_counter();
         void reset_counter();
         void set_counter_value(unsigned long _value);
